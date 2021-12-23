@@ -41,10 +41,10 @@ public class ObjectMove : MonoBehaviour
         sphere = GameObject.Find("Sphere");
         sphereTime = getSphereTime();
         sphereSpeed = distance / sphereTime;
-
+        /*
         jeep = GameObject.Find("Jeep");
         jeepTime = getJeepTime();
-        jeepSpeed = distance / jeepTime;
+        jeepSpeed = distance / jeepTime;*/
     }
 
     // Update is called once per frame
@@ -52,7 +52,7 @@ public class ObjectMove : MonoBehaviour
     {
         //Print current time
         time += Time.deltaTime;
-        Debug.Log("Time(sec): " + time);
+        //Debug.Log("Time(sec): " + time);
 
         if (cube.transform.position.z < distance)
         {
@@ -62,10 +62,12 @@ public class ObjectMove : MonoBehaviour
         {
             sphere.transform.Translate(0, 0, sphereSpeed * Time.deltaTime);
         }
+        /*
         if (jeep.transform.position.z < distance)
         {
             jeep.transform.Translate(0, 0, jeepSpeed * Time.deltaTime);
         }
+        */
         
     }
 }
