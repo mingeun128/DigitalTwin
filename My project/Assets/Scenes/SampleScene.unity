@@ -148,12 +148,12 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50631189}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.4
+  m_Radius: 0.325
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.04
   m_ForceAppPointDistance: 0
   m_Mass: 10
   m_WheelDampingRate: 0.25
@@ -183,6 +183,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4492082096092808}
   m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &228419440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 228419443}
+  - component: {fileID: 228419442}
+  - component: {fileID: 228419441}
+  m_Layer: 0
+  m_Name: Terrain (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!154 &228419441
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228419440}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 07af51b8ba181a44283ad6ecc475f625, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &228419442
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228419440}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 07af51b8ba181a44283ad6ecc475f625, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!4 &228419443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228419440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1250, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &266830483
 PrefabInstance:
@@ -274,12 +350,12 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304731233}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.4
+  m_Radius: 0.325
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.04
   m_ForceAppPointDistance: 0
   m_Mass: 10
   m_WheelDampingRate: 0.25
@@ -489,12 +565,12 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961450823}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.37
+  m_Radius: 0.29
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.04
   m_ForceAppPointDistance: 0
   m_Mass: 10
   m_WheelDampingRate: 0.25
@@ -602,13 +678,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0.9063079, z: -0.42261827, w: 0}
-  m_LocalPosition: {x: 300, y: 300, z: 1000}
+  m_LocalRotation: {x: -0, y: 0.93969274, z: -0.3420201, w: 0}
+  m_LocalPosition: {x: 299.99985, y: 500, z: 1200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 180, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -966,7 +1042,7 @@ Transform:
   m_GameObject: {fileID: 1397510596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -250, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1299,12 +1375,12 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677875826}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.37
+  m_Radius: 0.29
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.04
   m_ForceAppPointDistance: 0
   m_Mass: 10
   m_WheelDampingRate: 0.25
@@ -1778,7 +1854,7 @@ BoxCollider:
   m_GameObject: {fileID: 1341689759458712}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.067624, y: 1.0032985, z: 4.526185}
   m_Center: {x: 0.000003755093, y: 0.2869665, z: 0.18667261}
@@ -2181,6 +2257,7 @@ MonoBehaviour:
   mortor: 50000
   power: 3000
   rot: 45
+  obstaclePosition: 230
 --- !u!54 &1833254566477617
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2191,7 +2268,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 500
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
