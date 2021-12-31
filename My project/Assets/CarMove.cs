@@ -186,7 +186,7 @@ public class CarMove : MonoBehaviour
         }
         if (car.transform.position.x < 100)
         {
-            Debug.Log("BRAKE");
+            //Debug.Log("BRAKE");
             isbrake = true;
             for (int i = 0; i < 4; i++)
             {
