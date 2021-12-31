@@ -12,10 +12,12 @@ public class CarMove : MonoBehaviour
     public float power = 10000f;
     public float rot = 50;
     public float obstaclePosition = 230;
-    public bool isbrake = false;
+    public bool carAtFoward = false;
     GameObject car = null;
     Rigidbody rb;
-
+    private Vector3 prePosition;
+    private float carSpeed = 0f;
+    float delay = 5f;
     void Start()
     {
         car = GameObject.Find("car 1203 yellow");
@@ -26,51 +28,37 @@ public class CarMove : MonoBehaviour
             wheels[i].ConfigureVehicleSubsteps(5, 12, 13);
         }
         rb.centerOfMass = new Vector3(0, -0.5f, 0);
-        StartCoroutine("MoveCar");
-        if (car.transform.position.x < 600)
-        {
-            StartCoroutine("Avoidance");
-        }
-        //Invoke("Avoidance", 7f);
+        //StartCoroutine("MoveCar");
+        prePosition = car.transform.position;
     }
 
     private void Update()
     {
         UpdateMeshesPostion();
+        
     }
     
     void FixedUpdate()
     {
-        //float a = Input.GetAxis("Vertical");
-        if (isbrake)
+        carSpeed = GetCarSpeed(car);
+        //CarForward(30f);
+        if (delay > 0)
         {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, -power));
+            CarBack(60f);
         }
         else
+        {
+            carStop();
+        }
+        delay -= Time.deltaTime;
+        if (carAtFoward)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, power));
         }
-        
-        /*
-        if (car.transform.position.x < 600)
-        {
-            Avoidance();
-        }
         else
         {
-            for (int i = 0; i < 4; i++)
-            {
-                wheels[i].motorTorque = mortor;
-            }
+            rb.AddForce(transform.rotation * new Vector3(0, 0, -power));
         }
-        
-        float steer = rot * Input.GetAxis("Horizontal");
-
-        for (int i = 0; i < 2; i++)
-        {
-            wheels[i].steerAngle = steer;
-        }
-        */
     }
 
     void UpdateMeshesPostion()
@@ -85,16 +73,85 @@ public class CarMove : MonoBehaviour
         }
     }
 
+    float GetCarSpeed(GameObject car)
+    {
+        Vector3 delta_Position = car.transform.position - prePosition;
+        carSpeed = delta_Position.magnitude / Time.deltaTime;
+        Debug.Log("Speed: " + carSpeed);
+        prePosition = transform.position;
+        return carSpeed;
+    }
+
+    void CarForward(float speed)
+    {
+        if(carSpeed < speed)
+        {
+            carAtFoward = true;
+            for (int i = 0; i < 4; i++)
+            {
+                wheels[i].motorTorque = mortor*2;
+            }
+        }
+        else
+        {
+            carAtFoward = false;
+            for (int i = 0; i < 4; i++)
+            {
+                wheels[i].motorTorque = 0;
+            }
+        }
+    }
+
+    void CarBack(float speed)
+    {
+        if (carSpeed < speed)
+        {
+            carAtFoward = false;
+            for (int i = 0; i < 4; i++)
+            {
+                wheels[i].motorTorque = -(mortor * 2);
+            }
+        }
+        else
+        {
+            carAtFoward = true;
+            for (int i = 0; i < 4; i++)
+            {
+                wheels[i].motorTorque = 0;
+            }
+        }
+    }
+
+    void carStop()
+    {
+        if (carSpeed > 5f)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                wheels[i].brakeTorque = mortor * 500;
+                wheels[i].motorTorque = 0;
+            }
+            if (carAtFoward)
+            {
+                carAtFoward = false;
+            }
+            else
+            {
+                carAtFoward = true;
+            }
+        }
+    }
+
     IEnumerator Avoidance()
     {
-        isbrake = true;
+        carAtFoward = true;
         for (int i = 0; i < 4; i++)
         {
             wheels[i].brakeTorque = mortor*500;
             wheels[i].motorTorque = 0;
         }
         yield return new WaitForSeconds(2.0f);
-        isbrake = false;
+        carAtFoward = false;
         for (int i = 0; i < 4; i++)
         {
             wheels[i].brakeTorque = 0;
@@ -113,7 +170,7 @@ public class CarMove : MonoBehaviour
         {
             wheels[i].steerAngle = 0;
         }
-        isbrake = true;
+        carAtFoward = true;
         for (int i = 0; i < 4; i++)
         {
             wheels[i].brakeTorque = mortor * 500;
@@ -121,7 +178,7 @@ public class CarMove : MonoBehaviour
         }
         yield return new WaitForSeconds(1.5f);
 
-        isbrake = false;
+        carAtFoward = false;
         for (int i = 0; i < 2; i++)
         {
             wheels[i].steerAngle = rot;
@@ -133,7 +190,7 @@ public class CarMove : MonoBehaviour
 
         yield return new WaitForSeconds(8f);
 
-        isbrake = true;
+        carAtFoward = true;
         for (int i = 0; i < 4; i++)
         {
             wheels[i].brakeTorque = mortor * 500;
@@ -141,7 +198,7 @@ public class CarMove : MonoBehaviour
         }
         yield return new WaitForSeconds(2.0f);
 
-        isbrake = false;
+        carAtFoward = false;
         wheels[0].motorTorque = mortor;
         wheels[2].motorTorque = mortor;
         //wheels[1].motorTorque = mortor;
@@ -169,10 +226,9 @@ public class CarMove : MonoBehaviour
 
     IEnumerator MoveCar()
     {
-        
         while (car.transform.position.x > obstaclePosition + 400)
         {
-            isbrake = false;
+            carAtFoward = false;
             for (int i = 0; i < 4; i++)
             {
                 wheels[i].motorTorque = mortor;
@@ -186,8 +242,8 @@ public class CarMove : MonoBehaviour
         }
         if (car.transform.position.x < 100)
         {
-            //Debug.Log("BRAKE");
-            isbrake = true;
+            Debug.Log("BRAKE");
+            carAtFoward = true;
             for (int i = 0; i < 4; i++)
             {
                 wheels[i].brakeTorque = mortor * 500;

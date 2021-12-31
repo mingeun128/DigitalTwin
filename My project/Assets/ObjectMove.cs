@@ -8,14 +8,14 @@ public class ObjectMove : MonoBehaviour
 {
     GameObject cube = null;
     GameObject sphere = null;
-    GameObject jeep = null;
+    //GameObject jeep = null;
     int cubeTime = 0;
     int sphereTime = 0;
-    int jeepTime = 0;
+    //int jeepTime = 0;
     float distance;
     float cubeSpeed;
     float sphereSpeed;
-    float jeepSpeed;
+    //float jeepSpeed;
     float time = 0;
 
     //Import C++ func
