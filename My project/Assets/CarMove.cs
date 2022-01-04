@@ -9,7 +9,7 @@ public class CarMove : MonoBehaviour
     public WheelCollider[] wheels = new WheelCollider[4];
     public Transform[] tires = new Transform[4]; 
     public float mortor = 5000000.0f;
-    public float power = 10000f;
+    public float power = 100000f;
     public float rot = 50;
     public float obstaclePosition = 230;
     public bool carAtFoward = false;
@@ -17,7 +17,7 @@ public class CarMove : MonoBehaviour
     Rigidbody rb;
     private Vector3 prePosition;
     private float carSpeed = 0f;
-    float delay = 5f;
+    //float delay = 5f;
     void Start()
     {
         car = GameObject.Find("car 1203 yellow");
@@ -35,22 +35,43 @@ public class CarMove : MonoBehaviour
     private void Update()
     {
         UpdateMeshesPostion();
-        
+        if (car.transform.position.x < 150 && ObjectControl.isGreenLight)
+        {
+            StartCoroutine("CarTurnLeft");
+        }
+
     }
     
     void FixedUpdate()
     {
         carSpeed = GetCarSpeed(car);
         //CarForward(30f);
-        if (delay > 0)
+        if (car.transform.position.x > 150)
         {
-            CarBack(60f);
+            if (ObjectControl.isRedLight)
+            {
+                CarStop();
+            }
+            else if (ObjectControl.isYellowLight)
+            {
+                //CarStop();
+            }
+            else if (ObjectControl.isGreenLight)
+            {
+                CarForward(40f);
+                //Debug.Log("GO GO");
+            }
+        }
+        else if (car.transform.position.z < 400)
+        {
+            CarStop();
         }
         else
         {
-            carStop();
+            CarForward(40f);
         }
-        delay -= Time.deltaTime;
+        
+
         if (carAtFoward)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, power));
@@ -122,7 +143,7 @@ public class CarMove : MonoBehaviour
         }
     }
 
-    void carStop()
+    void CarStop()
     {
         if (carSpeed > 5f)
         {
@@ -140,6 +161,34 @@ public class CarMove : MonoBehaviour
                 carAtFoward = true;
             }
         }
+    }
+
+    IEnumerator CarTurnLeft()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            wheels[i].steerAngle = -45;
+        }
+        yield return new WaitForSeconds(20f);
+        for (int i = 0; i < 2; i++)
+        {
+            wheels[i].steerAngle = 0;
+        }
+        StopCoroutine("carTurnLeft");
+    }
+
+    IEnumerator CarTurnRight()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            wheels[i].steerAngle = 45;
+        }
+        yield return new WaitForSeconds(20f);
+        for (int i = 0; i < 2; i++)
+        {
+            wheels[i].steerAngle = 0;
+        }
+        StopCoroutine("carTurnRight");
     }
 
     IEnumerator Avoidance()
