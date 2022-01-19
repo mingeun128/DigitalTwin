@@ -14,6 +14,8 @@ public class CarMove : MonoBehaviour
     public float obstaclePosition = 230;
     public bool carAtFoward = false;
     GameObject car = null;
+    GameObject fence = null;
+    GameObject stopLine = null;
     Rigidbody rb;
     private Vector3 prePosition;
     private float carSpeed = 0f;
@@ -21,6 +23,8 @@ public class CarMove : MonoBehaviour
     void Start()
     {
         car = GameObject.Find("car 1203 yellow");
+        fence = GameObject.Find("Track_Fence");
+        stopLine = GameObject.Find("Plane");
         rb = GetComponent<Rigidbody>();
         for (int i = 0; i < 4; i++)
         {
@@ -35,9 +39,9 @@ public class CarMove : MonoBehaviour
     private void Update()
     {
         UpdateMeshesPostion();
-        if (car.transform.position.x < 150 && ObjectControl.isGreenLight)
+        if ((car.transform.position.x < (fence.transform.position.x + 400f)))
         {
-            StartCoroutine("CarTurnLeft");
+            StartCoroutine("Avoidance");
         }
 
     }
@@ -46,7 +50,7 @@ public class CarMove : MonoBehaviour
     {
         carSpeed = GetCarSpeed(car);
         //CarForward(30f);
-        if (car.transform.position.x > 150)
+        if (car.transform.position.x > (stopLine.transform.position.x + 25f))
         {
             if (ObjectControl.isRedLight)
             {
@@ -62,7 +66,7 @@ public class CarMove : MonoBehaviour
                 //Debug.Log("GO GO");
             }
         }
-        else if (car.transform.position.z < 400)
+        else if (car.transform.position.x < -800)
         {
             CarStop();
         }
