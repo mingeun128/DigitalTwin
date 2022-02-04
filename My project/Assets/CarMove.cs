@@ -20,7 +20,7 @@ public class CarMove : MonoBehaviour
     Rigidbody rb;
     private Vector3 prePosition;
     private float carSpeed = 0f;
-    float delay = 0f;
+    //float delay = 5f;
     void Start()
     {
         car = GameObject.Find("car 1203 yellow");
@@ -35,17 +35,15 @@ public class CarMove : MonoBehaviour
         rb.centerOfMass = new Vector3(0, -0.5f, 0);
         //StartCoroutine("MoveCar");
         prePosition = car.transform.position;
-        
     }
 
     private void Update()
     {
         UpdateMeshesPostion();
-
-        if ((car.transform.position.x < (fence.transform.position.x + 450f)))
+        if ((car.transform.position.x < (fence.transform.position.x + 450f)) && isAvoidance == false)
         {
-            delay += Time.deltaTime;
-            StartCoroutine("Avoidance", delay);
+            isAvoidance = true;
+            StartCoroutine("Avoidance");
         }
 
     }
@@ -199,30 +197,20 @@ public class CarMove : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator Avoidance(float time)
+    IEnumerator Avoidance()
     {
-        if (time < 10f)
-        {
-            Debug.Log("turn left");
-            yield return StartCoroutine("CarTurnLeft");
-        }
-        else if (time < 15f)
-        {
-            Debug.Log("straight");
-            yield return new WaitForSeconds(1.5f);
-        }
-        else if (time < 25f)
-        {
-            Debug.Log("turn right");
-            yield return StartCoroutine("CarTurnRight");
-        }
-        
+        Debug.Log("turn left");
+        yield return StartCoroutine("CarTurnLeft");
+                
+        Debug.Log("straight");
+        yield return new WaitForSeconds(1.5f);
 
-        
+        Debug.Log("turn right");
+        yield return StartCoroutine("CarTurnRight");
 
-        //yield return StartCoroutine("CarTurnLeft");
+        yield return StartCoroutine("CarTurnLeft");
 
-        //yield return StartCoroutine("CarTurnRight");
+        yield return StartCoroutine("CarTurnRight");
     }
 
     IEnumerator MoveCar()
