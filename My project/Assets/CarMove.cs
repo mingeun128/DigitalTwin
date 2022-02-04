@@ -211,6 +211,8 @@ public class CarMove : MonoBehaviour
         yield return StartCoroutine("CarTurnLeft");
 
         yield return StartCoroutine("CarTurnRight");
+
+        isAvoidance = false;
     }
 
     IEnumerator MoveCar()
