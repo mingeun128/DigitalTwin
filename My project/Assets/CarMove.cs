@@ -13,13 +13,14 @@ public class CarMove : MonoBehaviour
     public float rot = 50;
     public float obstaclePosition = 230;
     public bool carAtFoward = false;
+    public bool isAvoidance = false;
     GameObject car = null;
     GameObject fence = null;
     GameObject stopLine = null;
     Rigidbody rb;
     private Vector3 prePosition;
     private float carSpeed = 0f;
-    //float delay = 5f;
+    float delay = 0f;
     void Start()
     {
         car = GameObject.Find("car 1203 yellow");
@@ -34,14 +35,17 @@ public class CarMove : MonoBehaviour
         rb.centerOfMass = new Vector3(0, -0.5f, 0);
         //StartCoroutine("MoveCar");
         prePosition = car.transform.position;
+        
     }
 
     private void Update()
     {
         UpdateMeshesPostion();
-        if ((car.transform.position.x < (fence.transform.position.x + 400f)))
+
+        if ((car.transform.position.x < (fence.transform.position.x + 450f)))
         {
-            StartCoroutine("Avoidance");
+            delay += Time.deltaTime;
+            StartCoroutine("Avoidance", delay);
         }
 
     }
@@ -102,7 +106,7 @@ public class CarMove : MonoBehaviour
     {
         Vector3 delta_Position = car.transform.position - prePosition;
         carSpeed = delta_Position.magnitude / Time.deltaTime;
-        Debug.Log("Speed: " + carSpeed);
+        //Debug.Log("Speed: " + carSpeed);
         prePosition = transform.position;
         return carSpeed;
     }
@@ -178,7 +182,7 @@ public class CarMove : MonoBehaviour
         {
             wheels[i].steerAngle = 0;
         }
-        StopCoroutine("carTurnLeft");
+        yield return null;
     }
 
     IEnumerator CarTurnRight()
@@ -192,89 +196,33 @@ public class CarMove : MonoBehaviour
         {
             wheels[i].steerAngle = 0;
         }
-        StopCoroutine("carTurnRight");
+        yield return null;
     }
 
-    IEnumerator Avoidance()
+    IEnumerator Avoidance(float time)
     {
-        carAtFoward = true;
-        for (int i = 0; i < 4; i++)
+        if (time < 10f)
         {
-            wheels[i].brakeTorque = mortor*500;
-            wheels[i].motorTorque = 0;
+            Debug.Log("turn left");
+            yield return StartCoroutine("CarTurnLeft");
         }
-        yield return new WaitForSeconds(2.0f);
-        carAtFoward = false;
-        for (int i = 0; i < 4; i++)
+        else if (time < 15f)
         {
-            wheels[i].brakeTorque = 0;
+            Debug.Log("straight");
+            yield return new WaitForSeconds(1.5f);
         }
-        for (int i = 0; i < 2; i++)
+        else if (time < 25f)
         {
-            wheels[i].steerAngle = -rot;
+            Debug.Log("turn right");
+            yield return StartCoroutine("CarTurnRight");
         }
-        wheels[1].motorTorque = mortor;
-        wheels[3].motorTorque = mortor;
-        yield return new WaitForSeconds(4.0f);
         
-        wheels[1].motorTorque = mortor;
-        wheels[3].motorTorque = mortor;
-        for (int i = 0; i < 2; i++)
-        {
-            wheels[i].steerAngle = 0;
-        }
-        carAtFoward = true;
-        for (int i = 0; i < 4; i++)
-        {
-            wheels[i].brakeTorque = mortor * 500;
-            wheels[i].motorTorque = 0;
-        }
-        yield return new WaitForSeconds(1.5f);
 
-        carAtFoward = false;
-        for (int i = 0; i < 2; i++)
-        {
-            wheels[i].steerAngle = rot;
-        }
-        wheels[0].motorTorque = mortor;
-        wheels[2].motorTorque = mortor;
-        //wheels[1].motorTorque = mortor;
-        //wheels[3].motorTorque = mortor;
+        
 
-        yield return new WaitForSeconds(8f);
+        //yield return StartCoroutine("CarTurnLeft");
 
-        carAtFoward = true;
-        for (int i = 0; i < 4; i++)
-        {
-            wheels[i].brakeTorque = mortor * 500;
-            wheels[i].motorTorque = 0;
-        }
-        yield return new WaitForSeconds(2.0f);
-
-        carAtFoward = false;
-        wheels[0].motorTorque = mortor;
-        wheels[2].motorTorque = mortor;
-        //wheels[1].motorTorque = mortor;
-        //wheels[3].motorTorque = mortor;
-
-        yield return new WaitForSeconds(8.0f);
-
-
-        for (int i = 0; i < 2; i++)
-        {
-            wheels[i].steerAngle = -rot;
-        }
-        wheels[1].motorTorque = mortor;
-        wheels[3].motorTorque = mortor;
-        yield return new WaitForSeconds(3.0f);
-
-        for (int i = 0; i < 2; i++)
-        {
-            wheels[i].steerAngle = 0;
-        }
-        yield return new WaitForSeconds(7.0f);
-        StopCoroutine("Avoidance");
-        StartCoroutine("MoveCar");
+        //yield return StartCoroutine("CarTurnRight");
     }
 
     IEnumerator MoveCar()
