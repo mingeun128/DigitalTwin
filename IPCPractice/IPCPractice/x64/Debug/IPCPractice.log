@@ -1,0 +1,11 @@
+﻿Socket.obj : error LNK2019: __imp_accept 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_bind 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_closesocket 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_htonl 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_htons 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_listen 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_send 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_socket 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_WSAStartup 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+Socket.obj : error LNK2019: __imp_WSACleanup 외부 기호(참조 위치: main 함수)에서 확인하지 못했습니다.
+C:\Users\alsrm\source\repos\IPCPractice\x64\Debug\IPCPractice.exe : fatal error LNK1120: 10개의 확인할 수 없는 외부 참조입니다.
