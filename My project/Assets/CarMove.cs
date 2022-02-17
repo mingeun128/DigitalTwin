@@ -7,15 +7,15 @@ using UnityEngine;
 public class CarMove : MonoBehaviour
 {
     public WheelCollider[] wheels = new WheelCollider[4];
-    public Transform[] tires = new Transform[4]; 
-    public float mortor = 5000000.0f;
-    public float power = 10000000f;
-    public float rot = 50f;
-    public float carSpeed = 40f;
+    public Transform[] tires = new Transform[4];
+    public float mortor = 50000.0f; //add motor power
+    public float power = 3000f; //add car body power
+    public float rot = 45f; //curve angle
+    public float carSpeed = 40f; //initial car speed
     public bool carAtFoward = false;
     public bool isAvoidance = false;
     GameObject car = null;
-    GameObject fence = null;
+    //GameObject fence = null;
     GameObject stopLine = null;
     Rigidbody rb;
     private Vector3 prePosition;
@@ -24,8 +24,8 @@ public class CarMove : MonoBehaviour
     void Start()
     {
         car = GameObject.Find("car 1203 yellow");
-        fence = GameObject.Find("Track_Fence");
-        stopLine = GameObject.Find("Plane");
+        //fence = GameObject.Find("Track_Fence");
+        stopLine = GameObject.Find("Plane1");
         rb = GetComponent<Rigidbody>();
         for (int i = 0; i < 4; i++)
         {
@@ -33,14 +33,13 @@ public class CarMove : MonoBehaviour
             wheels[i].ConfigureVehicleSubsteps(5, 12, 13);
         }
         rb.centerOfMass = new Vector3(0, -0.5f, 0);
-        //StartCoroutine("MoveCar");
         prePosition = car.transform.position;
     }
 
     private void Update()
     {
         UpdateMeshesPostion();
-        if ((car.transform.position.x < (fence.transform.position.x + 450f)) && (car.transform.position.x > fence.transform.position.x) && isAvoidance == false)
+        if (CarCam.detectedObstacle && isAvoidance == false)
         {
             isAvoidance = true;
             StartCoroutine("Avoidance");
@@ -52,19 +51,23 @@ public class CarMove : MonoBehaviour
         GetCarSpeed(car);
         if (car.transform.position.x > (stopLine.transform.position.x + 25f))
         {
-            if (ObjectControl.isRedLight)
+            if (CarCam.detectedRed)
             {
                 CarStop();
             }
-            else if (ObjectControl.isYellowLight)
+            else if (CarCam.detectedYellow)
             {
                 //CarStop();
             }
-            else if (ObjectControl.isGreenLight)
+            else if (CarCam.detectedGreen)
             {
                 carSpeed = 40f;
                 CarForward(carSpeed);
-                //Debug.Log("GO GO");
+            }
+            else
+            {
+                carSpeed = 40f;
+                CarForward(carSpeed);
             }
         }
         else if (car.transform.position.x < -810)
@@ -75,8 +78,8 @@ public class CarMove : MonoBehaviour
         {
             CarForward(carSpeed);
         }
-        
 
+        
         if (carAtFoward)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, power));
@@ -103,17 +106,18 @@ public class CarMove : MonoBehaviour
     {
         Vector3 delta_Position = car.transform.position - prePosition;
         curCarSpeed = delta_Position.magnitude / Time.deltaTime;
-        Debug.Log("Speed: " + curCarSpeed);
+        //Debug.Log("Speed: " + curCarSpeed);
         prePosition = transform.position;
     }
 
     void CarForward(float speed)
     {
-        if(curCarSpeed < speed)
+        if (curCarSpeed < speed)
         {
             carAtFoward = true;
             for (int i = 0; i < 4; i++)
             {
+                wheels[i].brakeTorque = 0;
                 wheels[i].motorTorque = mortor*2;
             }
         }
@@ -122,6 +126,7 @@ public class CarMove : MonoBehaviour
             carAtFoward = false;
             for (int i = 0; i < 4; i++)
             {
+                wheels[i].brakeTorque = 0;
                 wheels[i].motorTorque = 0;
             }
         }
@@ -134,6 +139,7 @@ public class CarMove : MonoBehaviour
             carAtFoward = false;
             for (int i = 0; i < 4; i++)
             {
+                wheels[i].brakeTorque = 0;
                 wheels[i].motorTorque = -(mortor * 2);
             }
         }
@@ -142,6 +148,7 @@ public class CarMove : MonoBehaviour
             carAtFoward = true;
             for (int i = 0; i < 4; i++)
             {
+                wheels[i].brakeTorque = 0;
                 wheels[i].motorTorque = 0;
             }
         }
@@ -159,11 +166,11 @@ public class CarMove : MonoBehaviour
             if (carAtFoward)
             {
                 carAtFoward = false;
-            }
+            }/*
             else
             {
                 carAtFoward = true;
-            }
+            }*/
         }
     }
 
@@ -174,7 +181,7 @@ public class CarMove : MonoBehaviour
         {
             wheels[i].steerAngle = -45;
         }
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(2f);
         for (int i = 0; i < 2; i++)
         {
             wheels[i].steerAngle = 0;
@@ -189,7 +196,7 @@ public class CarMove : MonoBehaviour
         {
             wheels[i].steerAngle = 45;
         }
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(2f);
         for (int i = 0; i < 2; i++)
         {
             wheels[i].steerAngle = 0;
@@ -199,17 +206,13 @@ public class CarMove : MonoBehaviour
 
     IEnumerator Avoidance()
     {
-        Debug.Log("turn left");
         yield return StartCoroutine("CarTurnLeft");
                 
-        Debug.Log("straight");
         carSpeed = 40f;
         yield return new WaitForSeconds(7f);
 
-        Debug.Log("turn right");
         yield return StartCoroutine("CarTurnRight");
 
-        Debug.Log("straight");
         carSpeed = 40f;
         yield return new WaitForSeconds(5f);
 
