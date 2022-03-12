@@ -57,7 +57,7 @@ public class CarCam2 : MonoBehaviour
             {
                 if ((cameraTr.position.x + 70f > human.transform.position.x) && (cameraTr.position.x - 70f < human.transform.position.x))
                 {
-                    Debug.Log("Blue car : DETECT HUMAN!!");
+                    //Debug.Log("Blue car : DETECT HUMAN!!");
                     DetectedPedestrian();
                 }
                 else

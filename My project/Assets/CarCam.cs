@@ -62,21 +62,21 @@ public class CarCam : MonoBehaviour
             {
                 if (ObjectControl.isGreenLight1)
                 {
-                    Debug.Log("Yellow car : DETECT GREEN!!");
+                    //Debug.Log("Yellow car : DETECT GREEN!!");
                     DetectedGreen();
                     UnDetectedYellow();
                     UnDetectedRed();
                 }
                 if (ObjectControl.isYellowLight1)
                 {
-                    Debug.Log("Yellow car : DETECT YELLOW!!");
+                    //Debug.Log("Yellow car : DETECT YELLOW!!");
                     DetectedYellow();
                     UnDetectedGreen();
                     UnDetectedRed();
                 }
                 if (ObjectControl.isRedLight1)
                 {
-                    Debug.Log("Yellow car : DETECT RED!!");
+                    //Debug.Log("Yellow car : DETECT RED!!");
                     DetectedRed();
                     UnDetectedGreen();
                     UnDetectedYellow();
@@ -84,7 +84,7 @@ public class CarCam : MonoBehaviour
             }
             if ((cameraTr.position.x - 350f < obstacle.transform.position.x) && (cameraTr.position.x > obstacle.transform.position.x))
             {
-                Debug.Log("Yellow car : DETECT OBSTACLE !!!");
+                //Debug.Log("Yellow car : DETECT OBSTACLE !!!");
                 DetectedObstacle();
             }
             else if (cameraTr.position.x < obstacle.transform.position.x)

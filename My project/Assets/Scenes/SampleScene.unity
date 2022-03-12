@@ -1139,23 +1139,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6f56813474f2404eb7163eff5181188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Ip: 127.0.0.1
-  m_Port: 50001
-  m_SendPacket:
-    m_FloatlVariable: 0
-    m_StringlVariable: 
-    m_BoolVariable: 0
-    m_IntVariable: 0
-  m_ReceivePacket:
-    m_BoolVariable: 0
-    m_IntVariable: 0
-    m_FloatlVariable: 0
-    m_StringlVariable: 
 --- !u!1001 &987335576
 PrefabInstance:
   m_ObjectHideFlags: 0
