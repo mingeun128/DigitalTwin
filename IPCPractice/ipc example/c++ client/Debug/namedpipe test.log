@@ -1,0 +1,3 @@
+﻿  svr.cpp
+c:\users\alsrm\downloads\ipc example\c++ client\svr.cpp(20): warning C4101: 'dwMode' :참조되지 않은 지역 변수입니다.
+  namedpipe test.vcxproj -> C:\Users\alsrm\Downloads\ipc example\c++ client\Debug\namedpipe test.exe
