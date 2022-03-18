@@ -1,3 +1,8 @@
 ﻿  svr.cpp
-c:\users\alsrm\downloads\ipc example\c++ client\svr.cpp(20): warning C4101: 'dwMode' :참조되지 않은 지역 변수입니다.
-  namedpipe test.vcxproj -> C:\Users\alsrm\Downloads\ipc example\c++ client\Debug\namedpipe test.exe
+c:\users\user\documents\github\unityproject\ipcpractice\ipc example\c++ client\svr.cpp(19): warning C4101: 'dwMode' :참조되지 않은 지역 변수입니다.
+c:\users\user\documents\github\unityproject\ipcpractice\ipc example\c++ client\svr.cpp(129): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'LPTSTR'입니다.
+  c:\users\user\documents\github\unityproject\ipcpractice\ipc example\c++ client\svr.cpp(129): note: 서식 문자열에서 '%ls'을(를) 사용하는 것이 좋습니다.
+  c:\users\user\documents\github\unityproject\ipcpractice\ipc example\c++ client\svr.cpp(129): note: 서식 문자열에서 '%lls'을(를) 사용하는 것이 좋습니다.
+  c:\users\user\documents\github\unityproject\ipcpractice\ipc example\c++ client\svr.cpp(129): note: 서식 문자열에서 '%Ls'을(를) 사용하는 것이 좋습니다.
+  c:\users\user\documents\github\unityproject\ipcpractice\ipc example\c++ client\svr.cpp(129): note: 서식 문자열에서 '%ws'을(를) 사용하는 것이 좋습니다.
+  namedpipe test.vcxproj -> C:\Users\user\Documents\GitHub\UnityProject\IPCPractice\ipc example\c++ client\Debug\namedpipe test.exe
