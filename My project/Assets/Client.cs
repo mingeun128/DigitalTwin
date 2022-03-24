@@ -17,6 +17,7 @@ public class Client : MonoBehaviour
     string car_position = "";
     GameObject car = null;
     private Vector3 carPosition;
+    public static bool stopCommand = false;
 
     void Start()
     {
@@ -38,6 +39,14 @@ public class Client : MonoBehaviour
         if (str.Length > 0)
         {
             Debug.Log(str);
+            if (str == "stop")
+            {
+                stopCommand = true;
+            }
+            else if (str == "go")
+            {
+                stopCommand = false;
+            }
             str = "";
         }
     }

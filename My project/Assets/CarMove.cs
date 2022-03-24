@@ -45,48 +45,55 @@ public class CarMove : MonoBehaviour
             StartCoroutine("Avoidance");
         }
     }
-    
+
     void FixedUpdate()
     {
         GetCarSpeed(car);
-        if (car.transform.position.x > (stopLine.transform.position.x + 25f))
-        {
-            if (CarCam.detectedRed)
-            {
-                CarStop();
-            }
-            else if (CarCam.detectedYellow)
-            {
-                //CarStop();
-            }
-            else if (CarCam.detectedGreen)
-            {
-                carSpeed = 40f;
-                CarForward(carSpeed);
-            }
-            else
-            {
-                carSpeed = 40f;
-                CarForward(carSpeed);
-            }
-        }
-        else if (car.transform.position.x < -810)
+        if (Client.stopCommand == true)
         {
             CarStop();
         }
         else
         {
-            CarForward(carSpeed);
-        }
+            if (car.transform.position.x > (stopLine.transform.position.x + 25f))
+            {
+                if (CarCam.detectedRed)
+                {
+                    CarStop();
+                }
+                else if (CarCam.detectedYellow)
+                {
+                    //CarStop();
+                }
+                else if (CarCam.detectedGreen)
+                {
+                    carSpeed = 40f;
+                    CarForward(carSpeed);
+                }
+                else
+                {
+                    carSpeed = 40f;
+                    CarForward(carSpeed);
+                }
+            }
+            else if (car.transform.position.x < -810)
+            {
+                CarStop();
+            }
+            else
+            {
+                CarForward(carSpeed);
+            }
 
-        
-        if (carAtFoward)
-        {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, power));
-        }
-        else
-        {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, -power));
+
+            if (carAtFoward)
+            {
+                rb.AddForce(transform.rotation * new Vector3(0, 0, power));
+            }
+            else
+            {
+                rb.AddForce(transform.rotation * new Vector3(0, 0, -power));
+            }
         }
     }
 
